@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +50,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3937618702943746"
-       crossorigin="anonymous"></script>
-  <script type="module" crossorigin src="/assets/index-DTrXGUgh.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-D-ABjALS.css">
+  <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <header class="site-header">
@@ -127,7 +125,7 @@
         Higher DPI means more detail packed into the same physical space, resulting in sharper images and text.
       </p>
 
-      <h3>Using the DPI Calculator for Monitors &amp; Laptops</h3>
+      <h3>Using the DPI Calculator for Monitors & Laptops</h3>
       <p>
         Find your screen’s resolution in Windows (Display settings) or macOS (About This Mac &gt; Displays),
         then enter the pixel width, pixel height, and the marketed diagonal size (usually 13", 15", 24", 27", or 32").
@@ -148,23 +146,6 @@
         <li><strong>300 PPI:</strong> Preferred for high-quality photographic prints.</li>
         <li><strong>600+ PPI:</strong> Scanned documents and high-density mobile displays.</li>
       </ul>
-    </section>
-
-    <section id="learn" class="content">
-      <h2>DPI vs PPI: What’s the Difference?</h2>
-      <p>
-        <strong>DPI</strong> stands for dots per inch. It is traditionally used for print, scanners, and output devices.
-        A printer rated at 600 DPI means the print head can place 600 ink dots per inch.
-      </p>
-      <p>
-        <strong>PPI</strong> stands for pixels per inch. It is the more accurate term for screens and digital files.
-        Your monitor has a fixed pixel density. A photo file has pixel dimensions.
-        PPI describes how tightly those pixels are packed.
-      </p>
-      <p>
-        For consumer use, the terms are used interchangeably.
-        The important factor is using the actual physical size and the actual pixel dimensions when using a pixel density calculator.
-      </p>
     </section>
 
     <section id="faq" class="faq">
@@ -189,36 +170,12 @@
         Your screen dimensions, resolution inputs, and calculation results never leave your device.
       </p>
     </section>
-
-  <section class="site-crosslinks" aria-label="Recommended utilities">
-    <h2>Recommended Utilities</h2>
-    <div class="crosslink-grid">
-      <a class="crosslink" href="https://utilitylab.dev/ai-search-schema-generator">AI Search Schema Generator</a>
-      <a class="crosslink" href="https://utilitylab.dev/dpi-calculator">DPI Calculator</a>
-      <a class="crosslink" href="https://utilitylab.dev/ai-cost-simulator">AI Cost Simulator</a>
-      <a class="crosslink" href="https://utilitylab.dev/csv-streamliner">CSV Streamliner</a>
-      <a class="crosslink" href="https://utilitylab.dev/safe-zone-generator">Safe Zone Generator</a>
-      <a class="crosslink" href="https://utilitylab.dev/markdown-cleaner">Markdown Cleaner</a>
-      <a class="crosslink" href="https://utilitylab.dev/container-query-playground">Container Query Playground</a>
-      <a class="crosslink" href="https://utilitylab.dev/p2p-file-share">P2P File Share</a>
-      <a class="crosslink" href="https://utilitylab.dev/srt-splitter">SRT Splitter</a>
-      <a class="crosslink" href="https://utilitylab.dev/svg-animator">SVG Animator</a>
-    </div>
-  </section>
-  <!-- AdSense -->
-  <ins class="adsbygoogle"
-       style="display:block; text-align:center; margin: 1.5rem 0;"
-       data-ad-client="ca-pub-3937618702943746"
-       data-ad-slot="XXXXXXXXXX"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-
   </main>
 
   <footer class="site-footer">
     <p>© <span id="year">2026</span> DPI Calculator. Free &amp; open source.</p>
   </footer>
 
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
