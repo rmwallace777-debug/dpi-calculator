@@ -51,7 +51,7 @@
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3937618702943746"
        crossorigin="anonymous"></script>
-  <script type="module" crossorigin src="/assets/index-DTrXGUgh.js"></script>
+  <script type="module" crossorigin src="/assets/index-0T_LpvTi.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/style-D-ABjALS.css">
 </head>
 <body>
@@ -114,39 +114,54 @@
 
         <!-- Action Buttons -->
         <div class="actions">
+          <button id="calculate-btn" type="button" class="btn primary">Calculate</button>
           <button id="reset-btn" type="button" class="btn secondary">Reset</button>
-          <button id="copy-btn" type="button" class="btn primary">Copy Result</button>
+          <button id="copy-btn" type="button" class="btn secondary">Copy Result</button>
         </div>
       </div>
     </section>
 
     <section class="content">
-      <h2>How to Calculate DPI (PPI) — Step by Step</h2>
+      <h2>How to Calculate DPI (PPI)</h2>
       <p>
-        DPI (dots per inch) — also commonly called PPI (pixels per inch) when talking about screens — measures pixel density.
-        Higher DPI means more detail packed into the same physical space, resulting in sharper images and text.
+        DPI (dots per inch) — often called PPI (pixels per inch) for screens and digital files — measures
+        how many pixels fit into one linear inch of display or print. Higher pixel density means sharper
+        text, crisper images, and more detail at close viewing distance. Low DPI looks soft or blurry on
+        Retina and high-density displays, while insufficient PPI produces muddy prints even when the
+        source file looks fine on screen.
       </p>
 
-      <h3>Using the DPI Calculator for Monitors &amp; Laptops</h3>
+      <h3>Using the DPI Calculator for Monitors and Laptops</h3>
       <p>
-        Find your screen’s resolution in Windows (Display settings) or macOS (About This Mac &gt; Displays),
-        then enter the pixel width, pixel height, and the marketed diagonal size (usually 13", 15", 24", 27", or 32").
-        The tool will compute exact pixel density and help you compare sharpness across devices.
+        Find your screen resolution in Windows (Display settings) or macOS (About This Mac &gt; Displays).
+        Enter the pixel width, pixel height, and the physical diagonal size (usually 13&quot;, 15&quot;, 24&quot;, 27&quot;,
+        or 32&quot;). The calculator returns exact pixel density and lets you compare sharpness across devices.
+        This is especially useful when choosing between a 27-inch 1440p monitor and a 4K display: the
+        higher PPI of 4K often means noticeably sharper text at normal viewing distance.
       </p>
 
-      <h3>How to Calculate Print DPI (Scanner, Camera, or Photo)</h3>
+      <h3>How to Calculate Print DPI From a Photo or Scan</h3>
       <p>
-        For printed images, use the <em>pixel dimensions of the source file</em> and the <em>printed physical size</em>.
-        A 4×6 inch print made from a 1800×1200 px image has a lower PPI than the same print from a 3600×2400 px image.
-        Use this calculator to check whether your photo or scan will print crisp at the intended size.
+        For printed images, use the pixel dimensions of the source file and the intended printed physical
+        size. A 4×6 inch print from a 1800×1200 px image has lower PPI than the same print from a
+        3600×2400 px image. The standard target for photographic print is 300 DPI; below 250 DPI you
+        will start seeing softness on coated stock. Use this tool to verify whether your photo, scan, or
+        design asset has enough pixels for the target output without resampling artifacts.
       </p>
 
-      <h3>What’s a “Good” PPI?</h3>
+      <h3>What Is Considered Good PPI for Different Use Cases?</h3>
       <ul>
-        <li><strong>72–96 PPI:</strong> Standard web/screen baseline.</li>
-        <li><strong>150–200 PPI:</strong> Acceptable for basic print and large-format posters viewed up close.</li>
-        <li><strong>300 PPI:</strong> Preferred for high-quality photographic prints.</li>
-        <li><strong>600+ PPI:</strong> Scanned documents and high-density mobile displays.</li>
+        <li><strong>72–96 PPI:</strong> Standard baseline for web content and legacy screen design.</li>
+        <li><strong>150–200 PPI:</strong> Acceptable for large-format posters viewed at a distance.</li>
+        <li><strong>300 PPI:</strong> Preferred for professional photographic and offset print.</li>
+        <li><strong>600+ PPI:</strong> Scanned documents, high-density mobile displays, and fine art reproduction.</li>
+      </ul>
+
+      <h3>Common DPI and PPI Mistakes</h3>
+      <ul>
+        <li><strong>Confusing metadata with actual detail:</strong> Changing the DPI field in Photoshop does not add pixels. Only increasing the actual pixel count improves sharpness.</li>
+        <li><strong>Assuming 72 PPI for everything:</strong> That value is a historical web default, not a universal standard. Screens and prints operate on completely different scales.</li>
+        <li><strong>Ignoring bleed and trim:</strong> A US Letter page with 0.125&quot; bleed needs the file oversized before imposition; 300 DPI at trim size still requires oversizing.</li>
       </ul>
     </section>
 
@@ -162,24 +177,58 @@
         PPI describes how tightly those pixels are packed.
       </p>
       <p>
-        For consumer use, the terms are used interchangeably.
-        The important factor is using the actual physical size and the actual pixel dimensions when using a pixel density calculator.
+        For consumer use, the terms are often used interchangeably.
+        The important factor is using the actual physical size and actual pixel dimensions when using a pixel density calculator.
+      </p>
+
+      <h3>Does Screen PPI Change When You Change Resolution?</h3>
+      <p>
+        No. Physical pixel density is fixed by hardware. Lower resolutions simply scale pixels larger or use
+        non-integer scaling. A native-resolution measurement gives the real PPI; scaled modes only change how
+        the operating system maps logical coordinates to physical pixels.
+      </p>
+
+      <h3>How Does DPI Affect Gaming and Text Readability?</h3>
+      <p>
+        Higher PPI reduces pixelation and makes UI text sharper, which benefits coding, reading, and gaming.
+        Many gamers also adjust mouse DPI alongside display PPI, but those are separate concepts: mouse DPI
+        controls pointer movement distance and screen PPI controls display sharpness.
       </p>
     </section>
 
     <section id="faq" class="faq">
-      <h2>DPI PPI — Frequently Asked Questions</h2>
+      <h2>Frequently Asked Questions About DPI and PPI</h2>
 
       <h3>Does DPI affect gaming or text readability?</h3>
-      <p>Yes. Higher PPI reduces pixelation and makes UI text sharper, which benefits coding, reading, and gaming.
-      However, many gamers also adjust DPI alongside mouse sensitivity settings—see <em>mouse DPI</em> versus screen PPI.</p>
+      <p>
+        Higher PPI reduces pixelation and makes UI text sharper, which benefits coding, reading, and gaming.
+        Many gamers also adjust mouse DPI alongside display PPI, but those are separate concepts.
+      </p>
 
       <h3>Is DPI the same as PPI?</h3>
-      <p>Practically yes for displays. DPI historically refers to print dots; PPI refers to screen pixels.
-      In modern use, most calculators treat them interchangeably for consumer tasks.</p>
+      <p>
+        Practically yes for displays. DPI historically refers to print dots; PPI refers to screen pixels.
+        In modern use, most online calculators treat them interchangeably for consumer tasks.
+      </p>
 
       <h3>Can screen PPI change when changing resolution on a fixed-size monitor?</h3>
-      <p>No. Physical pixel density is fixed by hardware. Lower resolutions simply scale pixels larger or use non-integer scaling.</p>
+      <p>
+        No. Physical pixel density is fixed by hardware. Lower resolutions simply scale pixels larger or use
+        non-integer scaling rather than changing the actual PPI.
+      </p>
+
+      <h3>What DPI should I use for print design?</h3>
+      <p>
+        300 DPI is the standard for high-quality photographic and offset print. Below 250 DPI you will
+        usually start seeing softness on coated stock. Large-format print viewed from further away may be
+        acceptable at 150–200 DPI.
+      </p>
+
+      <h3>How do I calculate DPI manually?</h3>
+      <p>
+        Divide the diagonal pixel count by the diagonal size in inches. Diagonal pixel count is
+        sqrt(width² + height²). For a 2560×1440 display on a 27-inch panel, that is roughly 109 PPI.
+      </p>
     </section>
 
     <section id="privacy" class="privacy">

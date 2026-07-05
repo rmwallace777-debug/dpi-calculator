@@ -1,12 +1,14 @@
 /**
+// 2026-06-30 refresh
  * DPI Calculator — Main Entry
  * Handles URL param ingestion, dynamic metadata,
  * routing, and reactive form computation.
  */
 
 // ---- Utils ----
+const $$ = (sel, ctx = document) => ctx.querySelector(sel);
+const $q = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
 function parseQuery() {
   return Object.fromEntries(
@@ -14,19 +16,17 @@ function parseQuery() {
   );
 }
 
-// ---- DOM References ----
-const elTitle = $('#page-title');
-const elLead = $('#page-lead');
-const elMeta = $('#result-meta');
-const elValue = $('#dpi-value');
-const elCopy = $('#copy-btn');
-const elReset = $('#reset-btn');
-const elCanonical = $('#canonical');
-const elSchema = $('#jsonld-schema');
+// ---- DOM References (scoped to #tool to avoid duplicate SEO copies) ----
+const toolSection = document.getElementById('tool') || document;
 
-const inpW = $('#pixel-width');
-const inpH = $('#pixel-height');
-const inpD = $('#diagonal');
+const elMeta = $('#result-meta', toolSection);
+const elValue = $('#dpi-value', toolSection);
+const elCopy = $('#copy-btn', toolSection);
+const elReset = $('#reset-btn', toolSection);
+
+const inpW = $('#pixel-width', toolSection);
+const inpH = $('#pixel-height', toolSection);
+const inpD = $('#diagonal', toolSection);
 
 // ---- Routing / Metadata ----
 const routes = {
@@ -72,7 +72,6 @@ function applyRoute(route) {
   const r = routes[route];
   if (!r) return;
 
-  // Title & meta description
   document.title = r.title;
   const metaDesc = document.querySelector('meta[name="description"]') || (() => {
     const m = document.createElement('meta');
@@ -83,12 +82,14 @@ function applyRoute(route) {
   metaDesc.setAttribute('content', r.desc);
   metaDesc.setAttribute('name', 'description');
 
-  // Canonical self-reference
+  const elTitle = $('#page-title');
+  const elLead = $('#page-lead');
+  const elCanonical = $('#canonical');
+  const elSchema = $('#jsonld-schema');
+
   if (elCanonical) {
     elCanonical.setAttribute('href', window.location.origin + window.location.pathname + window.location.search);
   }
-
-  // JSON-LD update
   if (elSchema) {
     const ld = JSON.parse(elSchema.textContent);
     ld.name = r.title;
@@ -96,8 +97,6 @@ function applyRoute(route) {
     ld.url = window.location.origin + window.location.pathname + window.location.search;
     elSchema.textContent = JSON.stringify(ld);
   }
-
-  // Headings
   if (elTitle) elTitle.textContent = r.h1;
   if (elLead) elLead.textContent = r.lead;
 }
@@ -151,27 +150,138 @@ function compute() {
   return { w, h, d, ppi: ppiRounded, ci };
 }
 
-function initHandlers() {
-  const recalc = () => compute();
-  $$('.input').forEach(i => i.addEventListener('input', recalc));
+function attachToolLogic() {
+  const toolSection = document.getElementById('tool') || document;
+  const elMeta = $('#result-meta', toolSection);
+  const elValue = $('#dpi-value', toolSection);
+  const elCopy = $('#copy-btn', toolSection);
+  const elReset = $('#reset-btn', toolSection);
+  const inpW = $('#pixel-width', toolSection);
+  const inpH = $('#pixel-height', toolSection);
+  const inpD = $('#diagonal', toolSection);
 
-  elReset.addEventListener('click', () => {
-    inpW.value = ''; inpH.value = ''; inpD.value = '';
-    compute();
-    inpW.focus();
-  });
+  function compute() {
+    const w = parseFloat(inpW.value);
+    const h = parseFloat(inpH.value);
+    const d = parseFloat(inpD.value);
 
-  elCopy.addEventListener('click', async () => {
-    const text = elCopy.dataset.text || elValue.textContent;
-    try {
-      await navigator.clipboard.writeText(text);
-      const prev = elCopy.textContent;
-      elCopy.textContent = 'Copied!';
-      setTimeout(() => (elCopy.textContent = prev), 1400);
-    } catch {
-      elCopy.textContent = 'Select + copy';
+    if (!w || !h || !d || w <= 0 || h <= 0 || d <= 0) {
+      if (elValue) elValue.textContent = '—';
+      if (elMeta) elMeta.textContent = 'Enter values to calculate';
+      return null;
     }
-  });
+
+    const diagonalPx = Math.sqrt(w * w + h * h);
+    const ppi = diagonalPx / d;
+    if (!Number.isFinite(ppi)) {
+      if (elValue) elValue.textContent = 'Error';
+      if (elMeta) elMeta.textContent = 'Check input values.';
+      return null;
+    }
+
+    const ppiRounded = Math.round(ppi * 100) / 100;
+    if (elValue) elValue.textContent = ppiRounded.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    if (elMeta) elMeta.textContent = `Diagonal: ${Math.round(diagonalPx)} px (hypotenuse)`;
+    if (elCopy) elCopy.dataset.text = `${ppiRounded.toLocaleString(undefined, { maximumFractionDigits: 2 })} DPI (PPI)`;
+    return { w, h, d, ppi: ppiRounded };
+  }
+
+  if (elReset) {
+    elReset.addEventListener('click', () => {
+      if (inpW) inpW.value = '';
+      if (inpH) inpH.value = '';
+      if (inpD) inpD.value = '';
+      compute();
+      if (inpW) inpW.focus();
+    });
+  }
+
+  if (elCopy) {
+    elCopy.addEventListener('click', async () => {
+      const text = elCopy.dataset.text || (elValue ? elValue.textContent : '');
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = elCopy.textContent;
+        elCopy.textContent = 'Copied!';
+        setTimeout(() => { elCopy.textContent = prev; }, 1400);
+      } catch {
+        elCopy.textContent = 'Select + copy';
+      }
+    });
+  }
+}
+
+function initHandlers() {
+  const toolSection = document.getElementById('tool') || document;
+  const elMeta = $('#result-meta', toolSection);
+  const elValue = $('#dpi-value', toolSection);
+  const elCopy = $('#copy-btn', toolSection);
+  const elReset = $('#reset-btn', toolSection);
+  const inpW = $('#pixel-width', toolSection);
+  const inpH = $('#pixel-height', toolSection);
+  const inpD = $('#diagonal', toolSection);
+
+  function compute() {
+    const w = parseFloat(inpW.value);
+    const h = parseFloat(inpH.value);
+    const d = parseFloat(inpD.value);
+
+    if (!w || !h || !d || w <= 0 || h <= 0 || d <= 0) {
+      if (elValue) elValue.textContent = '—';
+      if (elMeta) elMeta.textContent = 'Enter values to calculate';
+      return null;
+    }
+
+    const diagonalPx = Math.sqrt(w * w + h * h);
+    const ppi = diagonalPx / d;
+    if (!Number.isFinite(ppi)) {
+      if (elValue) elValue.textContent = 'Error';
+      if (elMeta) elMeta.textContent = 'Check input values.';
+      return null;
+    }
+
+    const ppiRounded = Math.round(ppi * 100) / 100;
+    if (elValue) elValue.textContent = ppiRounded.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    if (elMeta) elMeta.textContent = `Diagonal: ${Math.round(diagonalPx)} px (hypotenuse)`;
+    if (elCopy) elCopy.dataset.text = `${ppiRounded.toLocaleString(undefined, { maximumFractionDigits: 2 })} DPI (PPI)`;
+    return { w, h, d, ppi: ppiRounded };
+  }
+
+  const calculateBtn = $('#calculate-btn', toolSection);
+  if (calculateBtn) {
+    calculateBtn.addEventListener('click', () => {
+      compute();
+      if (elValue && elValue.textContent && elValue.textContent !== '—') {
+        elValue.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
+  $q('input', toolSection).forEach(i => i.addEventListener('input', compute));
+
+  if (elReset) {
+    elReset.addEventListener('click', () => {
+      if (inpW) inpW.value = '';
+      if (inpH) inpH.value = '';
+      if (inpD) inpD.value = '';
+      compute();
+      if (inpW) inpW.focus();
+    });
+  }
+
+  if (elCopy) {
+    elCopy.addEventListener('click', async () => {
+      const text = elCopy.dataset.text || (elValue ? elValue.textContent : '');
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = elCopy.textContent;
+        elCopy.textContent = 'Copied!';
+        setTimeout(() => { elCopy.textContent = prev; }, 1400);
+      } catch {
+        elCopy.textContent = 'Select + copy';
+      }
+    });
+  }
 }
 
 // ---- Boot ----
@@ -179,5 +289,11 @@ parsed = parseQuery();
 const route = classifyQuery(parsed);
 applyRoute(route);
 prefill(parsed);
-initHandlers();
-compute();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => { initHandlers(); compute(); });
+} else {
+  initHandlers();
+  compute();
+}
+
+// build:2026-06-30T04:44:13
